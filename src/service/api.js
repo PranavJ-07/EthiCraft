@@ -1,37 +1,65 @@
 import axios from 'axios';
 
-const API_BASE = "http://localhost:8080"; // Spring Boot server
+const API_BASE = "http://localhost:8080"; // Spring Boot server base URL
 
 const api = axios.create({
-  baseURL: API_BASE
+  baseURL: API_BASE,
+  headers: {
+    'Content-Type': 'application/json'
+  }
 });
 
 // Get all students
 export const getStudents = async () => {
-  const response = await api.get("/students");
-  return Array.isArray(response.data) ? response.data : []; // Always return an array
+  try {
+    const response = await api.get("/students");
+    return Array.isArray(response.data) ? response.data : [];
+  } catch (error) {
+    console.error("Error fetching students:", error);
+    return [];
+  }
 };
 
-// Get a single student
+// Get a single student by roll number
 export const getStudent = async (rollNo) => {
-  const response = await api.get(`/student/${rollNo}`);
-  return response.data;
+  try {
+    const response = await api.get(`/student/${rollNo}`);
+    return response.data;
+  } catch (error) {
+    console.error(`Error fetching student with roll no ${rollNo}:`, error);
+    throw error;
+  }
 };
 
-// Add a new student
+// Add a new student (expects JSON body)
 export const addStudent = async (student) => {
-  const response = await api.post("/student", student);
-  return response.data;
+  try {
+    const response = await api.post("/student", student);
+    return response.data;
+  } catch (error) {
+    console.error("Error adding student:", error);
+    throw error;
+  }
 };
 
-// Update student
+// Update existing student
 export const updateStudent = async (student) => {
-  const response = await api.put("/student", student);
-  return response.data;
+  try {
+    const response = await api.put("/student", student);
+    return response.data;
+  } catch (error) {
+    console.error("Error updating student:", error);
+    throw error;
+  }
 };
 
-// Delete student
+// Delete student by roll number
 export const deleteStudent = async (rollNo) => {
-  const response = await api.delete(`/student/${rollNo}`);
-  return response.data; // could be a message string
+  try {
+    const response = await api.delete(`/student/${rollNo}`);
+    return response.data;
+  } catch (error) {
+    console.error(`Error deleting student with roll no ${rollNo}:`, error);
+    throw error;
+  }
 };

@@ -23,9 +23,6 @@ const App = () => {
     address: '',
   });
 
-  const [photo, setPhoto] = useState(null);
-  const [screenshot, setScreenshot] = useState(null);
-
   const handleChange = (event) => {
     const { name, value } = event.target;
     if (['firstName', 'middleName', 'lastName'].includes(name)) {
@@ -41,24 +38,14 @@ const App = () => {
     }
   };
 
-  const handleFileChange = (event) => {
-    const { name, files } = event.target;
-    if (name === 'photo') setPhoto(files[0]);
-    if (name === 'screenshot') setScreenshot(files[0]);
-  };
-
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    const data = new FormData();
-    Object.entries(formData).forEach(([key, value]) => {
-      data.append(key, value);
-    });
-    data.append('photo', photo);
-    data.append('screenshot', screenshot);
-
     try {
-      await axios.post('http://localhost:8080/student', data);
+      await axios.post('http://localhost:8080/student', formData, {
+        headers: { 'Content-Type': 'application/json' },
+      });
+
       alert('Student registered successfully');
     } catch (error) {
       console.error('Error submitting form:', error);
@@ -76,13 +63,13 @@ const App = () => {
             <span className="text-red-600 font-semibold">*</span> All fields are mandatory
           </p>
 
-          <form onSubmit={handleSubmit} className="space-y-6" encType="multipart/form-data">
+          <form onSubmit={handleSubmit} className="space-y-6">
             {/* Name Row */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {[
                 { key: 'firstName', label: 'First Name' },
                 { key: 'middleName', label: 'Middle Name' },
-                { key: 'lastName', label: 'Last Name' }
+                { key: 'lastName', label: 'Last Name' },
               ].map((field) => (
                 <div key={field.key} className="relative">
                   <label htmlFor={field.key} className="block text-sm font-medium text-gray-700 mb-1">
@@ -94,7 +81,7 @@ const App = () => {
                     type="text"
                     value={formData[field.key]}
                     onChange={handleChange}
-                    required={field.key !== 'middleName' ? true : false}
+                    required={field.key !== 'middleName'}
                     className="w-full border border-gray-300 rounded-md px-4 py-2 shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
                   />
                 </div>
@@ -206,33 +193,7 @@ const App = () => {
               </div>
             </div>
 
-            {/* File Inputs */}
-            <div className="space-y-6">
-              <div className="relative">
-                <label className="block text-sm font-medium text-gray-700 mb-1">Upload Photo*</label>
-                <input
-                  type="file"
-                  name="photo"
-                  accept="image/*"
-                  onChange={handleFileChange}
-                  className="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 transition-colors"
-                  required
-                />
-              </div>
-
-              <div className="relative">
-                <label className="block text-sm font-medium text-gray-700 mb-1">Upload Payment Screenshot*</label>
-                <input
-                  type="file"
-                  name="screenshot"
-                  accept="image/*"
-                  onChange={handleFileChange}
-                  className="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-red-50 file:text-red-700 hover:file:bg-red-100 transition-colors"
-                  required
-                />
-              </div>
-            </div>
-
+            {/* Submit Button */}
             <div className="pt-4">
               <button
                 className="w-full bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white py-3 rounded-lg text-lg font-bold shadow-lg transition-all duration-300 transform hover:scale-[1.01]"
@@ -253,11 +214,9 @@ const App = () => {
             <span style={{ color: 'rgb(0, 158, 234)' }}>Ethi</span>
             <span style={{ color: 'rgb(194, 18, 190)' }}>Craft</span>
             <span style={{ color: 'rgb(228, 236, 220)' }}>Club</span>
-
-            
           </h1>
           <p className="text-lg font-semibold mb-6 drop-shadow-md">
-            Guided by <span className="underline decoration-yellow-300">values</span> , Driven by{' '}
+            Guided by <span className="underline decoration-yellow-300">values</span>, Driven by{' '}
             <span className="underline decoration-yellow-300">purpose</span>.
           </p>
 
