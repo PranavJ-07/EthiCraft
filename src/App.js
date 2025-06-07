@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 import { FaUsers, FaHandshake, FaRocket } from 'react-icons/fa';
-import './App.css';
 
 const capitalize = (str) => {
   if (!str) return '';
@@ -9,23 +9,25 @@ const capitalize = (str) => {
 
 const App = () => {
   const [formData, setFormData] = useState({
+    rollNo: '',
     firstName: '',
     middleName: '',
     lastName: '',
     email: '',
+    prn: '',
+    dob: '',
+    mobileNo: '',
     department: '',
     division: '',
-    rollNo: '',
-    prnNo: '',
-    dob: '',
     gender: '',
     address: '',
-    mobileNo: '',
   });
 
+  const [photo, setPhoto] = useState(null);
+  const [screenshot, setScreenshot] = useState(null);
+
   const handleChange = (event) => {
-    const { name, value, type, checked } = event.target;
-    
+    const { name, value } = event.target;
     if (['firstName', 'middleName', 'lastName'].includes(name)) {
       setFormData((prev) => ({
         ...prev,
@@ -34,27 +36,38 @@ const App = () => {
     } else {
       setFormData((prev) => ({
         ...prev,
-        [name]: type === 'checkbox' ? checked : value,
+        [name]: value,
       }));
     }
   };
 
-  const handleSubmit = (event) => {
+  const handleFileChange = (event) => {
+    const { name, files } = event.target;
+    if (name === 'photo') setPhoto(files[0]);
+    if (name === 'screenshot') setScreenshot(files[0]);
+  };
+
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log(formData);
-  };
 
-  const handlePhotoUpload = (event) => {
-    console.log('Photo file:', event.target.files[0]);
-  };
+    const data = new FormData();
+    Object.entries(formData).forEach(([key, value]) => {
+      data.append(key, value);
+    });
+    data.append('photo', photo);
+    data.append('screenshot', screenshot);
 
-  const handleScreenshotUpload = (event) => {
-    console.log('Screenshot file:', event.target.files[0]);
+    try {
+      await axios.post('http://localhost:8080/student', data);
+      alert('Student registered successfully');
+    } catch (error) {
+      console.error('Error submitting form:', error);
+      alert('Submission failed. Check backend logs for more info.');
+    }
   };
 
   return (
     <div className="flex flex-col lg:flex-row min-h-screen bg-gradient-to-br from-[#0f2027] via-[#203a43] to-[#2c5364] text-white p-4">
-
       {/* Form Section */}
       <div className="lg:w-4/5 bg-white text-gray-800 flex items-center justify-center p-8 shadow-2xl order-2 lg:order-1 rounded-lg">
         <div className="w-full max-w-3xl">
@@ -63,7 +76,7 @@ const App = () => {
             <span className="text-red-600 font-semibold">*</span> All fields are mandatory
           </p>
 
-          <form onSubmit={handleSubmit} className="space-y-6">
+          <form onSubmit={handleSubmit} className="space-y-6" encType="multipart/form-data">
             {/* Name Row */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {[
@@ -81,7 +94,7 @@ const App = () => {
                     type="text"
                     value={formData[field.key]}
                     onChange={handleChange}
-                    required
+                    required={field.key !== 'middleName' ? true : false}
                     className="w-full border border-gray-300 rounded-md px-4 py-2 shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
                   />
                 </div>
@@ -93,7 +106,7 @@ const App = () => {
               {[
                 { label: 'Email*', name: 'email', type: 'email' },
                 { label: 'Roll Number*', name: 'rollNo', type: 'text' },
-                { label: 'PRN Number*', name: 'prnNo', type: 'text' },
+                { label: 'PRN Number*', name: 'prn', type: 'text' },
                 { label: 'Date of Birth*', name: 'dob', type: 'date' },
                 { label: 'Mobile Number*', name: 'mobileNo', type: 'tel' },
               ].map((field) => (
@@ -150,7 +163,7 @@ const App = () => {
                 >
                   <option value="">Select Division</option>
                   {[...Array(13)].map((_, i) => (
-                    <option key={i} value={i + 1}>FY-{i + 1}</option>
+                    <option key={i} value={`FY-${i + 1}`}>{`FY-${i + 1}`}</option>
                   ))}
                 </select>
               </div>
@@ -201,7 +214,7 @@ const App = () => {
                   type="file"
                   name="photo"
                   accept="image/*"
-                  onChange={handlePhotoUpload}
+                  onChange={handleFileChange}
                   className="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 transition-colors"
                   required
                 />
@@ -211,9 +224,9 @@ const App = () => {
                 <label className="block text-sm font-medium text-gray-700 mb-1">Upload Payment Screenshot*</label>
                 <input
                   type="file"
-                  name="paymentScreenshot"
+                  name="screenshot"
                   accept="image/*"
-                  onChange={handleScreenshotUpload}
+                  onChange={handleFileChange}
                   className="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-red-50 file:text-red-700 hover:file:bg-red-100 transition-colors"
                   required
                 />
@@ -237,11 +250,15 @@ const App = () => {
         <div className="text-center z-10 relative">
           <h1 className="text-4xl md:text-5xl font-extrabold mb-4 drop-shadow-lg">
             Welcome to <br />
-            <span className="text-yellow-200">EthiCraft Club</span>
+            <span style={{ color: 'rgb(0, 158, 234)' }}>Ethi</span>
+            <span style={{ color: 'rgb(194, 18, 190)' }}>Craft</span>
+            <span style={{ color: 'rgb(228, 236, 220)' }}>Club</span>
+
+            
           </h1>
           <p className="text-lg font-semibold mb-6 drop-shadow-md">
-            Empower your future with a <span className="underline decoration-yellow-300">simple</span> and{' '}
-            <span className="underline decoration-yellow-300">secure</span> registration.
+            Guided by <span className="underline decoration-yellow-300">values</span> , Driven by{' '}
+            <span className="underline decoration-yellow-300">purpose</span>.
           </p>
 
           <div className="mb-6 flex justify-center">
@@ -249,7 +266,7 @@ const App = () => {
               <img
                 alt="EthiCraft Logo"
                 className="rounded-full w-40 h-40 object-contain"
-                src="/EthiCraft.jpg"
+                src="/EthiCraft.png"
               />
             </div>
           </div>
