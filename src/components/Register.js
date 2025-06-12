@@ -329,7 +329,7 @@ const Register = () => {
       {/* Banner Section */}
       <div className="lg:w-1/3 flex flex-col items-center justify-center p-8 order-1 lg:order-2 bg-gradient-to-tr from-orange-400 via-yellow-400 to-orange-500 rounded-lg shadow-2xl text-white relative overflow-hidden lg:ml-6 mb-6 lg:mb-0">
         {/* EthiCraft Logo */}
-        <img src="EthiCraft.png" alt="EthiCraft Logo" className="mb-8 w-40 drop-shadow-lg" />
+        <img src="favicon.ico" alt="EthiCraft Logo" className="mb-8 w-40 drop-shadow-lg" />
 
         <div className="mb-10 space-y-4 text-center z-10 relative">
           <h2 className="text-4xl font-extrabold drop-shadow-lg">Welcome to Student Registration</h2>

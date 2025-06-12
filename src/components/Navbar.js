@@ -15,9 +15,18 @@ const Navbar = () => {
     <nav className="bg-yellow-400 shadow-lg">
       <div className="max-w-6xl mx-auto py-2 px- flex justify-between items-center">
         {/* Logo / Brand */}
+        {/* <Link to="/" className="flex items-center space-x-2">
+          <img
+            src="/logo.png"
+            alt="EthiCraft Logo"
+            className="h-10 w-10 rounded-full shadow-md"
+          />
+        </Link> */}
         <div className="text-3xl font-extrabold tracking-wide text-blue-900 drop-shadow-md">
-          <span className="text-blue-800">Ethi</span>
-          <span className="text-purple-700">Craft</span>
+          <Link to="/" className={linkClasses('/')}>
+            <span className="text-white-800">Ethi</span>
+            <span className="text-white-700">Craft</span>
+          </Link>
         </div>
 
         {/* Navigation Links */}
