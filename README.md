@@ -1,83 +1,70 @@
-# EthiCraft Student Registration
+# Getting Started with Create React App
 
-A modern student registration portal built with **React** (frontend) and **Spring Boot** (backend).
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Features
+## Available Scripts
 
-- Student registration form with validation
-- Add, update, delete, and view student records
-- RESTful API integration
-- Responsive, modern UI (Tailwind CSS)
-- Payment QR code for registration fee
+In the project directory, you can run:
 
-## Tech Stack
+### `npm start`
 
-- **Frontend:** React, Tailwind CSS, Axios
-- **Backend:** Spring Boot (API endpoints)
-- **Other:** React Icons
+Runs the app in the development mode.\
+Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
-## Getting Started
+The page will reload when you make changes.\
+You may also see any lint errors in the console.
 
-### Prerequisites
+### `npm test`
 
-- Node.js & npm
-- Java & Spring Boot (for backend)
-- Git
+Launches the test runner in the interactive watch mode.\
+See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-### Setup
+### `npm run build`
 
-#### 1. Clone the repository
+Builds the app for production to the `build` folder.\
+It correctly bundles React in production mode and optimizes the build for the best performance.
 
-```sh
-git clone https://github.com/Neerajkharde/EthiCraft.git
-cd EthiCraft
-```
+The build is minified and the filenames include the hashes.\
+Your app is ready to be deployed!
 
-#### 2. Install frontend dependencies
+See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-```sh
-npm install
-```
+### `npm run eject`
 
-#### 3. Start the React app
+**Note: this is a one-way operation. Once you `eject`, you can't go back!**
 
-```sh
-npm start
-```
+If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
 
-The app runs at [http://localhost:3000](http://localhost:3000).
+Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
 
-#### 4. Start the backend
+You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
 
-Make sure your Spring Boot server is running at `http://localhost:8080`.
+## Learn More
 
-## Project Structure
+You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
-```
-src/
-  components/
-    Register.js      # Main registration form
-  service/
-    api.js           # API calls to backend
-```
+To learn React, check out the [React documentation](https://reactjs.org/).
 
-## API Endpoints
+### Code Splitting
 
-- `GET    /students`           - Get all students
-- `GET    /student/{rollNo}`   - Get student by roll number
-- `POST   /student`            - Add new student
-- `PUT    /student`            - Update student
-- `DELETE /student/{rollNo}`   - Delete student
+This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
 
-## Customization
+### Analyzing the Bundle Size
 
-- **Logo:** Replace `favicon.ico` in `public/` or `src/` as needed.
-- **QR Code:** Update the QR code image URL in `Register.js` for your payment link.
+This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
 
-## License
+### Making a Progressive Web App
 
-MIT
+This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
 
----
+### Advanced Configuration
 
-*Built with ❤️ for EthiCraft*
+This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+
+### Deployment
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+
+### `npm run build` fails to minify
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
